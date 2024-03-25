@@ -1,0 +1,61 @@
+﻿@model Lab3Websitebanghang.Models.Product
+@using Microsoft.AspNetCore.Mvc.Rendering
+
+@{
+    ViewData["Title"] = "Add Product";
+}
+<h2>Add Product</h2>
+<form asp-action="Add" method="post" enctype="multipart/form-data" id="myForm">
+    <div class="form-group">
+        <label asp-for="Name"></label>
+        <input asp-for="Name" class="form-control" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Price"></label>
+        <input asp-for="Price" class="form-control" />
+        <span asp-validation-for="Price" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Description"></label>
+        <textarea asp-for="Description" class="form-control"></textarea>
+        <span asp-validation-for="Description" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="CategoryId">Category</label>
+        <select asp-for="CategoryId" asp-items="ViewBag.Categories" class="form-control"></select>
+    </div>
+    <div class="form-group">
+        <label asp-for="ImageUrl">Product Image</label>
+        <input type="file" asp-for="ImageUrl" class="form-control" />
+    </div>
+    <button type="submit" class="btn btn-primary" id="submitButton">Add</button>
+</form>
+
+<script>
+    $(document).ready(function () {
+        $('#submitButton').click(function (e) {
+            // Prevent default form submission
+            e.preventDefault();
+
+            // Optional: Collect form data
+            var formData = $('#myForm').serialize();
+
+            // Here you can make an AJAX call or any other custom operation
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("Add", "Product")', // Adjust based on your routing
+                data: formData,
+                success: function (response) {
+                    // Handle success
+                    alert('Form submitted successfully.');
+                },
+                error: function (xhr, status, error) {
+                    // Handle error
+                    alert('Error: ' + error);
+                }
+            });
+        });
+    });
+</script>
+
